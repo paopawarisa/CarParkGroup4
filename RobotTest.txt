@@ -1,0 +1,73 @@
+﻿*** Setting ***
+Library    Selenium2Library
+
+*** Variable ***
+${SEARCH URL}    http://localhost:8080/carpark/Search.jsp
+${BROWSER}    Chrome
+${DELAY}    0
+${SHOW URL}    http://localhost:8080/carpark/ParkingFee.jsp
+${CHANGE URL}    http://localhost:8080/carpark/Report.jsp
+${LOC CARLOGER}    CarId
+${LOC PAY}    cash
+${FAIL}    HTTP
+
+${BUTTON SEARCH}    ค้นหา
+${BUTTON PAY}    คำนวณเงินทอน
+
+${VA CARLOGER}    สฬ-5420
+${VA PAY}    1000
+
+${INV CARLOGER}    DSADSA
+${INV PAY}    0
+
+*** Testcase ***
+# CASE1 **
+OPEN WEB AND CLICK SEARCH BUTTON
+    Open Browser    ${SEARCH URL}    ${BROWSER}
+    Click Button    ${BUTTON SEARCH}
+	Page Should Contain    ${FAIL}
+    Set Selenium Speed    ${DELAY}
+	Sleep    3
+# CASE2
+WRONG LOGER INPUT
+    Go Back
+    Input Text    ${LOC CARLOGER}    ${INV CARLOGER}
+	Click Button    ${BUTTON SEARCH}
+	Page Should Contain    ${FAIL}
+	Set Selenium Speed    ${DELAY}
+	Sleep    3
+# CASE3
+VALID LOGER INPUT
+    Go Back
+    Input Text    ${LOC CARLOGER}    ${VA CARLOGER}
+	Click Button    ${BUTTON SEARCH}
+	Location Should Be    ${SHOW URL}
+	Set Selenium Speed    ${DELAY}
+	Sleep    3
+# CASE4
+CLICK PAY BUTTON
+    Click Button    ${BUTTON PAY}
+	Page Should Contain    ${FAIL}
+	Set Selenium Speed    ${DELAY}
+	Sleep    3
+# CASE5
+WRONG PAY INPUT
+    Go Back
+    Input Text    ${LOC PAY}    ${INV PAY}
+	Click Button    ${BUTTON PAY}
+	Page Should Contain    ${FAIL}
+	Set Selenium Speed    ${DELAY}
+	Sleep    3
+# CASE6
+VALID PAY INPUT
+    Go Back
+    Input Text    ${LOC PAY}    ${VA PAY}
+	Click Button    ${BUTTON PAY}
+	Location Should Be    ${CHANGE URL}
+	Set Selenium Speed    ${DELAY}	
+	Sleep    15
+	Close Browser
+	
+	
+
+	
